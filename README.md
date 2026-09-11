@@ -53,7 +53,6 @@ USB 线同时承担两项工作：
 
 本次真正要运行的是：
 
-[`代码/9DOF_Demo/9DOF_Demo.ino`](./代码/9DOF_Demo/9DOF_Demo.ino)
 
 目录可以这样理解：
 
@@ -108,6 +107,9 @@ sudo apt update
 
 ### 第 3 步：安装 Arduino IDE
 
+<img width="778" height="529" alt="image" src="https://github.com/user-attachments/assets/de4a73c0-50a9-44e0-8903-db2c01ccbbd7" />
+
+
 ```bash
 sudo apt install arduino
 ```
@@ -118,15 +120,12 @@ sudo apt install arduino
 
 ### 第 4 步：确认安装
 
-从 Raspberry Pi OS 应用菜单打开 `Arduino IDE`，再点击：
+在树莓派终端输入 arduino
+应看到弹出 arduino界面
+<img width="309" height="284" alt="image" src="https://github.com/user-attachments/assets/c43a37cb-b5f6-49d9-b951-8ddfd060c785" />
 
-```text
-帮助 -> 关于 Arduino
-```
 
-用途：确认程序能启动并查看版本。版本不同不一定不能用，但复现实验时优先使用已经验证过的 1.8.19。
-
-## 5. 第一次使用：安装 ESP32 开发板支持
+## 5. 第一次使用：安装 ESP32 开发板支持（如果用现有代码，则已配置好，可跳过）
 
 只安装 Arduino IDE 还不够。Arduino IDE 默认不知道怎样为 ESP32 编译程序，因此还要安装 ESP32 开发板包。
 
@@ -167,28 +166,25 @@ https://espressif.github.io/arduino-esp32/package_esp32_index.json
 
 注意：不能把 Windows 开发包中的 `.exe` 文件简单复制到树莓派运行。Windows 和 Linux 使用不同格式的可执行文件；开发包还必须与树莓派的 CPU 架构匹配。优先使用方法 A，让开发板管理器自动选择正确版本。
 
-## 6. 依赖库是否需要安装
+## 6. 依赖库安装
+在树莓派5中的文件管理器中找到该路径：
 
-运行 `9DOF_Demo` 不需要安装 `General-Libraries.zip`。
+`/home/username/Arduino`
+下载文件`libraries`，并进行解压缩，
 
-这个示例只使用：
+将`libraries`文件粘贴到该路径下，如图所示，检查依赖库是否被`arduino`识别，若`libraries`中的文件均在加载库中显示，则证明依赖库安装成功
 
-- `Arduino.h`：Arduino 基础功能；
-- `Wire.h`：I2C 通信；
-- `math.h`：数学计算；
-- 示例文件夹自身的 QMI8658 和 AK09918 驱动源码。
+<img width="1836" height="890" alt="image" src="https://github.com/user-attachments/assets/4a9f3cfb-29be-4d85-ad10-c029b0d038c6" />
 
-这些内容已经随 ESP32 开发板包或本项目代码提供。Arduino IDE 打开 `9DOF_Demo.ino` 时，会自动把同一文件夹中的 `.cpp` 和 `.h` 文件一起编译。
-
-本地 `ardiuno配置/依赖库` 中的 Adafruit、PID、舵机等库用于其他实验。把整个依赖库压缩包都装上不仅没有必要，还可能产生同名库冲突。
 
 ## 7. 连接开发板并确认串口
-<img width="778" height="529" alt="image" src="https://github.com/user-attachments/assets/98412eb5-090a-4ce0-b3db-48b2446eee6a" />
 
 
 ### 第 1 步：连接 USB
 
-用支持数据传输的 USB 线连接树莓派和 `General Driver for Robots` 开发板。
+用支持数据传输的 USB 线连接树莓派和 `General Driver for Robots` 开发板。（一定是能传数据的，不是充电线）
+<img width="934" height="1046" alt="image" src="https://github.com/user-attachments/assets/39e31f12-e498-401b-b212-da1c6aebfed0" />
+接线如图，注意输入电压为12v
 
 用途：建立供电、程序上传和串口输出通道。
 
@@ -220,51 +216,16 @@ sudo usermod -aG dialout "$USER"
 
 ## 8. 打开并配置 9DOF_Demo
 
-### 第 1 步：打开主程序
-
-打开 Arduino IDE，点击：
-
-```text
-文件 -> 打开
-```
-
-选择项目中的：
-
-```text
-代码/9DOF_Demo/9DOF_Demo.ino
-```
-
-用途：`.ino` 是 Arduino 项目的入口文件。不要单独打开 `IMU.cpp` 进行上传。
-
-### 第 2 步：选择开发板
-
-点击：
-
-```text
-工具 -> 开发板 -> ESP32 Arduino -> ESP32 Dev Module
-```
-
-用途：告诉编译器目标硬件是普通 ESP32。选错芯片可能导致编译成功但无法启动。
-
-### 第 3 步：选择关键参数
-
-与原项目相符的设置为：
-
-| 菜单项 | 设置 |
-| --- | --- |
-| Board | `ESP32 Dev Module` |
-| CPU Frequency | `240MHz (WiFi/BT)` |
-| Flash Mode | `QIO` |
-| Flash Frequency | `80MHz` |
-| Flash Size | `4MB (32Mb)` |
-| Partition Scheme | `Huge APP (3MB No OTA/1MB SPIFFS)` |
-| Upload Speed | 先用 `921600`；上传不稳定时改为 `115200` |
+在arduino界面，选择开发板ESP32 Dev Module，作为我们的开发环境
+<img width="1055" height="909" alt="image" src="https://github.com/user-attachments/assets/5d790b98-591d-4c8a-a239-feb2a2f02fd3" />
 
 用途：这些参数决定生成怎样的固件以及怎样写入 ESP32。对本示例来说，开发板类型、Flash 大小和端口最关键。
 
 ### 第 4 步：选择端口
 
 点击 `工具 -> 端口`，选择第 7 节实际查到的端口，例如 `/dev/ttyUSB0`。
+<img width="773" height="724" alt="image" src="https://github.com/user-attachments/assets/7c1f04d0-2aba-47b5-b3fa-195ce048a3d9" />
+
 
 用途：告诉 Arduino IDE 应该向哪一个 USB 串口上传程序。
 
@@ -327,7 +288,7 @@ Hard resetting via RTS pin...
 
 用途：程序一启动就会做加速度计、陀螺仪和磁力计校准。先打开串口再复位，才能看到完整提示并及时完成动作。
 
-## 10. 按正确时间完成启动校准（待开发，目前会直接跳过这一过程）
+## 10. 按正确时间完成启动校准（待开发，目前会直接跳过这一过程，即无校准，直接采集）
 
 这一段最容易操作错误。原程序不会等你按确认键，每个姿态只固定等待约 4 秒。
 
