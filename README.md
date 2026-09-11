@@ -183,6 +183,8 @@ https://espressif.github.io/arduino-esp32/package_esp32_index.json
 本地 `ardiuno配置/依赖库` 中的 Adafruit、PID、舵机等库用于其他实验。把整个依赖库压缩包都装上不仅没有必要，还可能产生同名库冲突。
 
 ## 7. 连接开发板并确认串口
+<img width="778" height="529" alt="image" src="https://github.com/user-attachments/assets/98412eb5-090a-4ce0-b3db-48b2446eee6a" />
+
 
 ### 第 1 步：连接 USB
 
@@ -325,7 +327,7 @@ Hard resetting via RTS pin...
 
 用途：程序一启动就会做加速度计、陀螺仪和磁力计校准。先打开串口再复位，才能看到完整提示并及时完成动作。
 
-## 10. 按正确时间完成启动校准
+## 10. 按正确时间完成启动校准（待开发，目前会直接跳过这一过程）
 
 这一段最容易操作错误。原程序不会等你按确认键，每个姿态只固定等待约 4 秒。
 
@@ -465,28 +467,3 @@ rm -rf "$HOME/.arduino15/cache/"*
 ## 13. 可能遇到的问题：可以编译，但不能上传
 
 出现这个问题的原因是当前版本的Arduino 1.8.19的缓存不能重复读取，最简单的办法是完全退出之后，不编译直接上传。
-
-
-## 15. 开源发布注意事项
-
-本地 `1.IMU` 目录包含约 6 GB 的 ESP32 工具链、压缩包和第三方库，不应该原样提交到 GitHub。本仓库的 `.gitignore` 会忽略这些内容，只保留 README 和本实验源码。
-
-还需要注意代码来源和许可证：
-
-- `AK09918.cpp/.h` 文件头声明来自 Seeed Technology，并使用 MIT License；发布时必须保留原版权和许可文字。
-- `esp32*.svd` 属于 Espressif 的 Apache-2.0 文件，普通运行不需要，已建议排除。
-- `debug.cfg` 含 GPL 标识，普通运行不需要，已建议排除。
-- `QMI8658` 驱动和 `9DOF_Demo` 的完整来源、授权范围目前没有在目录中写清楚。在确认来源前，不要直接给整个仓库套用 MIT License 并声称所有代码均为原创。
-- README 中应保留 FlowUs 教程、微雪硬件资料和上游驱动的署名与真实链接。
-
-建议公开仓库只包含：
-
-```text
-README.md
-.gitignore
-代码/9DOF_Demo/*.ino
-代码/9DOF_Demo/*.cpp
-代码/9DOF_Demo/*.h
-```
-
-这样仓库体积小、读者能快速找到代码，也不会把本机路径、重复工具链和大体积二进制文件一起公开。
