@@ -1,0 +1,19 @@
+# Local Arduino/ESP32 installers, toolchains, third-party libraries and saved web pages
+/ardiuno配置/
+
+# Machine-specific editor and debugger configuration
+**/.vscode/
+**/*.svd
+**/debug.cfg
+**/debug_custom.json
+
+# Generated data and build products
+*.log
+*.csv
+build/
+.pio/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini
