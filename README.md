@@ -20,15 +20,13 @@
       </a>
     </td>
     <td>
-      <a href="https://api.entropicecho.com/"><strong>熵之回响</strong></a><br><br>
-      感谢 <strong>熵之回响</strong> 对本项目开发过程提供的支持。
-      在资料整理、代码分析、问题排查与开发调试过程中，熵之回响提供的API服务为项目推进提供了便利与帮助。
+      <a href="https://api.entropicecho.com/"><strong>Entropic Echo</strong></a><br><br>
+      感谢 <strong>Entropic Echo</strong> 对本项目开发过程提供的支持。
+      在资料整理、代码分析、问题排查与开发调试过程中，Entropic Echo提供的API服务为项目推进提供了便利与帮助。
     </td>
   </tr>
 </table>
-
 <br>
-
 ## 1. 先理解整个系统
 
 这套系统里有三层设备，各自负责不同的工作：
